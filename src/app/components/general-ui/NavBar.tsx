@@ -47,7 +47,7 @@ const NavBar = () => {
 		<nav className='bg-[#111827] h-16 flex'>
 			<div className='container flex m-auto justify-between items-center'>
 				<div className='text-[#ffffff] text-3xl'>
-					<span className='text-[#0085fa]'>Market</span>Flow
+					<span className='text-[#0085fa]'>CRMHealth</span>Flow
 				</div>
 				<ul className='flex gap-10 text-white'>
 					{links.map(link => (

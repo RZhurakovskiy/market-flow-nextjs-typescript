@@ -1,16 +1,16 @@
 'use client'
-import CompaniesTable from '@/app/components/reporting-components/companies-components/CompaniesTable'
-
-import { ICompanies } from '@/app/interfaces/companiesData'
+import CompaniesTable from '@/app/components/reporting-components/suppliers-components/SuppliersTable'
+import { ISuppliers } from '@/app/interfaces/suppliersData'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 const Companies = () => {
-	const [dataCompanies, setDataCompanies] = useState<ICompanies[]>([])
+	const [dataSuppliers, setDataSuppliers] = useState<ISuppliers[]>([])
+	const [isLoad, setLoad] = useState(true)
 	const getComanies = () => {
 		axios
 			.get(
-				'https://react-crm-232e6-default-rtdb.europe-west1.firebasedatabase.app/companies.json',
+				'https://react-crm-232e6-default-rtdb.europe-west1.firebasedatabase.app/suppliers.json',
 				{
 					headers: {
 						'Content-Type': 'application/json',
@@ -25,15 +25,18 @@ const Companies = () => {
 						...data[key],
 					}
 				})
-				setDataCompanies(response)
+				setLoad(false)
+				setDataSuppliers(response)
 			})
-			.catch(() => {})
+			.catch(() => {
+				setLoad(false)
+			})
 	}
 
 	const deleteCompanies = (id: string) => {
 		axios
 			.delete(
-				`https://react-crm-232e6-default-rtdb.europe-west1.firebasedatabase.app/companies/${id}.json`,
+				`https://react-crm-232e6-default-rtdb.europe-west1.firebasedatabase.app/suppliers/${id}.json`,
 				{
 					headers: {
 						'Content-Type': 'application/json',
@@ -50,15 +53,15 @@ const Companies = () => {
 		getComanies()
 	}, [])
 	useEffect(() => {
-		console.log(dataCompanies)
+		console.log(dataSuppliers)
 	})
+
 	return (
-		<div>
-			<CompaniesTable
-				dataCompanies={dataCompanies}
-				deleteCompanies={deleteCompanies}
-			/>
-		</div>
+		<CompaniesTable
+			dataSuppliers={dataSuppliers}
+			deleteCompanies={deleteCompanies}
+			isLoad={isLoad}
+		/>
 	)
 }
 
